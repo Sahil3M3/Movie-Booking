@@ -3,6 +3,7 @@ import Login from "./pages/Login"
 import Layout from "./components/Layout"
 import AddCategory from "./pages/AddCategory"
 import AddMovie from "./pages/AddMovie"
+import ShowtimeManagement from "./pages/ShowtimeManagement"
 
 function App() {
 
@@ -15,8 +16,8 @@ function App() {
       <Route path="/admin" element={<Layout/>}>
          <Route path="add-category" element={<AddCategory/>} /> 
          <Route path="add-movie" element={<AddMovie />} />
-          {/* <Route path="showtime-management" element={<ShowtimeManagement />} />
-          <Route path="booked-movies" element={<BookedMovies />} /> */}
+           <Route path="showtime-management" element={<ShowtimeManagement />} />
+         {/* <Route path="booked-movies" element={<BookedMovies />} /> */}
       </Route> 
      </Routes>
    </BrowserRouter>
