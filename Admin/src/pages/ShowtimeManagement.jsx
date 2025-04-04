@@ -112,9 +112,7 @@ const ShowtimeManagement = () => {
               <p>
                 <strong>Time:</strong> {showtime.time}
               </p>
-              <p>
-                <strong>Screen:</strong> {showtime.screen}
-              </p>
+             
             </div>
           ))
         ) : (
