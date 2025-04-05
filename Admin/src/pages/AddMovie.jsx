@@ -90,60 +90,57 @@ const AddMovie = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black p-4">
-      <div className="bg-gray-800 text-white rounded-lg shadow-lg max-w-full sm:max-w-2xl mx-auto p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center">Add Movie</h2>
+    <div className="min-h-screen bg-black p-4 flex justify-center">
+      <div className="bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-lg p-4">
+        <h2 className="text-2xl font-semibold mb-6 text-center">Add Movie</h2>
 
-        <form onSubmit={handleAddMovie} className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-          {/* Name */}
+        <form onSubmit={handleAddMovie} className="space-y-4">
+          {[
+            { name: "name", label: "Name" },
+            { name: "director", label: "Director" },
+            { name: "genre", label: "Genre" },
+            { name: "releaseDate", label: "Release Date", type: "date" },
+            { name: "language", label: "Language" },
+            { name: "imdbRating", label: "IMDB Rating" },
+          ].map((field) => (
+            <div key={field.name} className="flex flex-col">
+              <label htmlFor={field.name} className="text-sm mb-1">
+                {field.label}
+              </label>
+              <input
+                type={field.type || "text"}
+                name={field.name}
+                value={movieDetails[field.name]}
+                onChange={handleChange}
+                className="p-2 border border-gray-600 bg-gray-700 rounded-md w-full"
+                required
+              />
+            </div>
+          ))}
+
           <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-medium mb-1">Name</label>
-            <input type="text" name="name" value={movieDetails.name} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
+            <label htmlFor="description" className="text-sm mb-1">Description</label>
+            <textarea
+              name="description"
+              value={movieDetails.description}
+              onChange={handleChange}
+              rows={3}
+              className="p-2 border border-gray-600 bg-gray-700 rounded-md"
+              required
+            />
           </div>
 
-          {/* Director */}
           <div className="flex flex-col">
-            <label htmlFor="director" className="text-sm font-medium mb-1">Director</label>
-            <input type="text" name="director" value={movieDetails.director} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* Genre */}
-          <div className="flex flex-col">
-            <label htmlFor="genre" className="text-sm font-medium mb-1">Genre</label>
-            <input type="text" name="genre" value={movieDetails.genre} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* Release Date */}
-          <div className="flex flex-col">
-            <label htmlFor="releaseDate" className="text-sm font-medium mb-1">Release Date</label>
-            <input type="date" name="releaseDate" value={movieDetails.releaseDate} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* Language */}
-          <div className="flex flex-col">
-            <label htmlFor="language" className="text-sm font-medium mb-1">Language</label>
-            <input type="text" name="language" value={movieDetails.language} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* IMDB Rating */}
-          <div className="flex flex-col">
-            <label htmlFor="imdbRating" className="text-sm font-medium mb-1">IMDB Rating</label>
-            <input type="text" name="imdbRating" value={movieDetails.imdbRating} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* Description (full width) */}
-          <div className="flex flex-col md:col-span-2">
-            <label htmlFor="description" className="text-sm font-medium mb-1">Description</label>
-            <textarea name="description" value={movieDetails.description} onChange={handleChange} rows={3} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
-          </div>
-
-          {/* Category */}
-          <div className="flex flex-col">
-            <label htmlFor="category" className="text-sm font-medium mb-1">Category</label>
-            <select name="category" value={movieDetails.category} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md">
+            <label htmlFor="category" className="text-sm mb-1">Category</label>
+            <select
+              name="category"
+              value={movieDetails.category}
+              onChange={handleChange}
+              className="p-2 border border-gray-600 bg-gray-700 rounded-md"
+            >
               {categories.length > 0 ? (
-                categories.map((category, index) => (
-                  <option key={index} value={category.category}>{category.category}</option>
+                categories.map((cat, i) => (
+                  <option key={i} value={cat.category}>{cat.category}</option>
                 ))
               ) : (
                 <option value="">No categories found</option>
@@ -151,36 +148,33 @@ const AddMovie = () => {
             </select>
           </div>
 
-          {/* Movie Poster */}
           <div className="flex flex-col">
-            <label className="text-sm font-medium mb-1">Movie Poster</label>
-            <input 
-              type="file" 
-              name="poster" 
-              onChange={handleFileChange} 
-              className="text-white p-1 file:mr-3 file:py-1 file:px-3 file:border-0 file:rounded file:bg-blue-600 file:text-white" 
-              required 
+            <label className="text-sm mb-1">Movie Poster</label>
+            <input
+              type="file"
+              name="poster"
+              onChange={handleFileChange}
+              className="file:bg-blue-600 file:text-white file:px-3 file:py-1 file:border-0 file:rounded"
+              required
             />
           </div>
 
-          {/* Hero Image (conditional) */}
           {movieDetails.category === "Hero Section" && (
             <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Hero Section Image</label>
-              <input 
-                type="file" 
-                name="heroImage" 
-                onChange={handleFileChange} 
-                className="text-white p-1 file:mr-3 file:py-1 file:px-3 file:border-0 file:rounded file:bg-blue-600 file:text-white" 
-                required 
+              <label className="text-sm mb-1">Hero Image</label>
+              <input
+                type="file"
+                name="heroImage"
+                onChange={handleFileChange}
+                className="file:bg-blue-600 file:text-white file:px-3 file:py-1 file:border-0 file:rounded"
+                required
               />
             </div>
           )}
 
-          {/* Submit Button (full width on all screens) */}
           <button
             type="submit"
-            className={`w-full sm:col-span-2 ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"} text-white font-semibold py-2 rounded-md transition-all duration-300`}
+            className={`w-full ${loading ? "bg-gray-500" : "bg-blue-600 hover:bg-blue-700"} text-white font-semibold py-2 rounded-md`}
             disabled={loading}
           >
             {loading ? "Adding..." : "Add Movie"}
