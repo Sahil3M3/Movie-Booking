@@ -106,9 +106,10 @@ const AddMovie = () => {
     } 
   };
   return (
-    <div className="p-6 bg-gray-800 text-white rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="p-4 sm:p-6 bg-gray-800 text-white rounded-lg shadow-lg max-w-full md:max-w-2xl mx-auto">
+
       <h2 className="text-2xl font-semibold mb-4 text-center">Add Movie</h2>
-      <form onSubmit={handleAddMovie} className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleAddMovie} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col">
           <label className="text-sm font-medium mb-1" htmlFor="name">Name</label>
           <input type="text" name="name" value={movieDetails.name} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />

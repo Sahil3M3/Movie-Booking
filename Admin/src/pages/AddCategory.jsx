@@ -9,7 +9,6 @@ const AddCategory = () => {
   const dispatch = useDispatch();
   const {user,loading}=useSelector(state=>state.auth);
   const navigate=useNavigate();
-  console.log(user,loading);
   
 
        useEffect(()=>{
@@ -30,7 +29,7 @@ const AddCategory = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-800 text-white rounded-lg shadow-lg w-96">
+    <div className="p-4 sm:p-6 bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-md mx-auto">
       <h2 className="text-2xl font-semibold mb-4">Add Category</h2>
       <form onSubmit={handleAddCategory} className="space-y-4">
         <div>

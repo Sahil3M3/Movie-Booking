@@ -7,7 +7,7 @@ const Header = () => {
   const dispatch=useDispatch();
 
   return (
-    <header className="bg-blue-400 flex justify-between items-center px-6 py-2">
+      <header className="sticky top-0 flex justify-between items-center bg-gray-900 text-white p-4 z-50 shadow-md">
       <h1 className="text-white text-xl font-bold">Admin Panel</h1>
       {user && <button className="bg-white text-blue-500 px-4 py-1 rounded hover:bg-gray-100 transition-all"
       onClick={()=>dispatch(logoutUser())}

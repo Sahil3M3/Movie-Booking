@@ -40,11 +40,11 @@ const BookedMovies = () => {
       {bookings.length === 0 ? (
         <p className="text-center text-gray-400">No bookings found.</p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {bookings.map((booking, index) => (
             <div
               key={index}
-              className="bg-gray-800 rounded-lg shadow-md p-4 border border-yellow-500 hover:shadow-xl transition"
+              className="bg-gray-800 rounded-lg shadow-md p-4 border border-yellow-500 hover:shadow-xl transition text-sm sm:text-base"
             >
               <h2 className="text-xl font-bold text-yellow-300 mb-2">{booking.movieName}</h2>
               <p><span className="font-semibold text-gray-300">Name:</span> {booking.name}</p>

@@ -81,10 +81,10 @@ const ShowtimeManagement = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-800 text-white rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="p-4 sm:p-6 bg-gray-800 text-white rounded-lg shadow-lg w-full max-w-2xl mx-auto">
       <h2 className="text-2xl font-semibold mb-4 text-center">Manage Showtimes</h2>
 
-      <form onSubmit={handleAddShowtime} className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleAddShowtime} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col">
           <label className="text-sm font-medium mb-1">Select Movie</label>
           <select name="movieId" value={newShowtime.movieId} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md">
@@ -107,7 +107,7 @@ const ShowtimeManagement = () => {
           <input type="time" name="time" value={newShowtime.time} onChange={handleChange} className="p-2 border border-gray-600 bg-gray-700 rounded-md" required />
         </div>
 
-        <button type="submit" className="col-span-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-all duration-300">
+        <button type="submit" className="w-full sm:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-all duration-300">
           Add Showtime
         </button>
       </form>
