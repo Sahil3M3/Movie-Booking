@@ -21,15 +21,14 @@ const Login = () => {
         
          if(!response._tokenResponse.registered)
           {            
-            throw new Error(response.error.message);
+            throw new Error("Email or Password is Wrong");
           }
-          else{
-           console.log(response._tokenResponse);
+          
            navigate("/admin")
-         }
+         
           
         } catch (error) {
-          alert(error)
+          alert("Email or Password is Wrong ")
         }
         
         

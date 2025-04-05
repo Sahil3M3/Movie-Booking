@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { database } from "../firebaseConfig";
 import { ref, push, set, onValue } from "firebase/database";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ShowtimeManagement = () => {
   const [movies, setMovies] = useState([]);
@@ -10,6 +12,17 @@ const ShowtimeManagement = () => {
     date: "",
     time: "",
   });
+  const {user,loading}=useSelector(state=>state.auth);
+
+  const navigate=useNavigate();
+  
+
+       useEffect(()=>{
+            
+        if( !loading && !user)
+          navigate("/")
+       },
+[user,loading,navigate]);
 
   useEffect(() => {
     const movieRef = ref(database, "movies");
@@ -32,6 +45,7 @@ const ShowtimeManagement = () => {
           id: key,
           ...showtimeData[key],
         }));
+        
         setShowtimes(showtimeList);
       }
     });
@@ -54,7 +68,7 @@ const ShowtimeManagement = () => {
       const showtimeRef = ref(database, "showtimes");
       const newShowtimeRef = push(showtimeRef);
       await set(newShowtimeRef, newShowtime);
-      console.log("Showtime Added");
+      alert("Showtime Added");
 
       setNewShowtime({
         movieId: "",

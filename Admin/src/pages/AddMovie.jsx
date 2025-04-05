@@ -2,6 +2,9 @@ import { database } from "../firebaseConfig";
 import { ref, push, set, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
+import { useDispatch, useSelector } from "react-redux";
+import { addMovie, fetchCategories } from "../store/movie";
+import { useNavigate } from "react-router-dom";
 
 const uploadToSupabase = async (file, folder = "posters") => {
   if (!file) return null;
@@ -23,7 +26,19 @@ const uploadToSupabase = async (file, folder = "posters") => {
 };
 
 const AddMovie = () => {
-  const [loading, setLoading] = useState(false); // Loading state
+  const { categories, loading } = useSelector((state) => state.movie);
+  const {user,loading:load}=useSelector(state=>state.auth);
+  const navigate=useNavigate();
+
+  const dispatch=useDispatch();
+           
+  useEffect(()=>{
+            
+    if( !load && !user)
+      navigate("/")
+   },
+  [user,loading,navigate])
+  
 
   const [movieDetails, setMovieDetails] = useState({
     name: "",
@@ -38,24 +53,11 @@ const AddMovie = () => {
     heroImage: null,
   });
 
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchCategories = () => {
-      const categoryRef = ref(database, "categories");
+          if(categories.length==0)
+            dispatch(fetchCategories())
 
-      onValue(categoryRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const categoryList = Object.values(data);
-          setCategories(categoryList);
-        } else {
-          setCategories([]);
-        }
-      });
-    };
-
-    fetchCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -69,8 +71,7 @@ const AddMovie = () => {
 
   const handleAddMovie = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
-  
+     
     try {
       const posterUrl = await uploadToSupabase(movieDetails.poster, "posters");
       let heroImageUrl = null;
@@ -78,16 +79,14 @@ const AddMovie = () => {
         heroImageUrl = await uploadToSupabase(movieDetails.heroImage, "hero-images");
       }
   
-      // Save movie data in Firebase Database
-      const movieRef = ref(database, "movies");
-      const newMovieRef = push(movieRef);
-  
-      await set(newMovieRef, {
-        ...movieDetails,
-        category: movieDetails.category,
-        poster: posterUrl,
-        heroImage: heroImageUrl,
-      });
+    dispatch(addMovie(
+      {
+           ...movieDetails,
+            category: movieDetails.category,
+            poster: posterUrl,
+            heroImage: heroImageUrl,
+      }
+    ))
   
       alert("Movie Added");
       setMovieDetails({
@@ -104,9 +103,7 @@ const AddMovie = () => {
     } catch (error) {
       console.error(error);
       alert("Failed to add movie. Please try again.");
-    } finally {
-      setLoading(false); // Stop loading
-    }
+    } 
   };
   return (
     <div className="p-6 bg-gray-800 text-white rounded-lg shadow-lg max-w-2xl mx-auto">
@@ -185,3 +182,4 @@ const AddMovie = () => {
 };
 
 export default AddMovie;
+

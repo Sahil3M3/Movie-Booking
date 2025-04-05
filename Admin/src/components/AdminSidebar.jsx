@@ -6,7 +6,7 @@ const AdminSidebar = () => {
       <h2 className="text-2xl font-bold mb-6">Admin Panel</h2>
 
       <nav className="flex flex-col space-y-4">
-        <Link to="/admin/add-category" className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition">
+        <Link to="/admin" className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition">
           Add Category
         </Link>
         <Link to="/admin/add-movie" className="p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition">

@@ -5,8 +5,16 @@ import AddCategory from "./pages/AddCategory"
 import AddMovie from "./pages/AddMovie"
 import ShowtimeManagement from "./pages/ShowtimeManagement"
 import BookedMovies from "./pages/BookedMovies"
+import { useDispatch } from "react-redux"
+import { listenForAuthChanges } from "./store/auth"
+import { useEffect } from "react"
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    listenForAuthChanges(dispatch);
+  }, [dispatch]);
 
   return (
    <BrowserRouter>
@@ -15,7 +23,7 @@ function App() {
         <Route index element={<Login/>} />  
       </Route>
       <Route path="/admin" element={<Layout/>}>
-         <Route path="add-category" element={<AddCategory/>} /> 
+         <Route index element={<AddCategory/>} /> 
          <Route path="add-movie" element={<AddMovie />} />
            <Route path="showtime-management" element={<ShowtimeManagement />} />
          <Route path="booked-movies" element={<BookedMovies />} />

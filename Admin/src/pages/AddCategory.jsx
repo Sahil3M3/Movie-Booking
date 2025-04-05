@@ -1,33 +1,38 @@
-import { database } from "../firebaseConfig";
-import { ref, push, set } from "firebase/database";
+import { useEffect, useState } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { addCategory } from "../store/movie";
+import { useNavigate } from "react-router-dom";
 
 
 const AddCategory = () => {
+  const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
+  const {user,loading}=useSelector(state=>state.auth);
+  const navigate=useNavigate();
+  console.log(user,loading);
+  
 
-  const handleAddCategory =async (e) => {
-    const category=e.get("category");
-   
+       useEffect(()=>{
+            
+        if( !loading && !user)
+          navigate("/")
+       },
+      [user,loading,navigate])
+
+  const handleAddCategory = (e) => {
+    e.preventDefault();
     if (category.trim() === "") {
       alert("Category name cannot be empty");
+      return;
     }
-    try {
-      
-    
-  const categoryRef = ref(database, "categories"); 
-  const newCategoryRef = push(categoryRef); 
-
-  await set(newCategoryRef, {category });
-
-      alert("Category added");
-    } catch (error) {
-      console.error("Error adding category:", error);
-    }
+    dispatch(addCategory(category));
+    setCategory(""); // Reset input field
   };
 
   return (
-    <div className="p-6 bg-gray-800  text-white rounded-lg shadow-lg w-96">
+    <div className="p-6 bg-gray-800 text-white rounded-lg shadow-lg w-96">
       <h2 className="text-2xl font-semibold mb-4">Add Category</h2>
-      <form action={handleAddCategory} className="space-y-4">
+      <form onSubmit={handleAddCategory} className="space-y-4">
         <div>
           <label className="block text-lg font-medium mb-2" htmlFor="category">
             Category Name
@@ -36,6 +41,8 @@ const AddCategory = () => {
             type="text"
             id="category"
             name="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             className="w-full p-2 border border-gray-600 bg-gray-700 rounded-md focus:ring focus:ring-blue-400 outline-none"
             placeholder="Enter category name"
             required

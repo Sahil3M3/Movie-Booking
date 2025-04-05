@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { database } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const BookedMovies = () => {
   const [bookings, setBookings] = useState([]);
+  const {user,loading}=useSelector(state=>state.auth);
+
+  const navigate=useNavigate();
+  
+
+       useEffect(()=>{
+            
+        if( !loading && !user)
+          navigate("/")
+       },
+      [user,loading,navigate])
+
 
   useEffect(() => {
     const bookingRef = ref(database, "bookings");
