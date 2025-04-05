@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { database } from "../../../Admin/src/firebaseConfig";
+import { database } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
 import { movieAction } from "../store/movie";
 
